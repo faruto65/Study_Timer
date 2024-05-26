@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             title: "タイマー設定",
             html: `
                 <input id="settingHours" class="swal2-input" type="number" placeholder="時間"><br>
-                <label><input id="settingMinutes" class="swal2-input" type="number" placeholder="分"><br>
-                <label><input id="settingSeconds" class="swal2-input" type="number" placeholder="秒">
+                <input id="settingMinutes" class="swal2-input" type="number" placeholder="分"><br>
+                <input id="settingSeconds" class="swal2-input" type="number" placeholder="秒">
             `,
             focusConfirm: false,
             preConfirm: () => {
