@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         Swal.fire({
             title: "タイマー設定",
             html: `
-                <label>時間: <input id="settingHours" class="swal2-input" type="number"></label>
-                <label>分: <input id="settingMinutes" class="swal2-input" type="number"></label>
-                <label>秒: <input id="settingSeconds" class="swal2-input" type="number"></label>
+                <label>時間: <input id="settingHours" class="swal2-input" type="number" min="0" max="23"></label>
+                <label>分: <input id="settingMinutes" class="swal2-input" type="number" min="0" max="59"></label>
+                <label>秒: <input id="settingSeconds" class="swal2-input" type="number" min="0" max="59"></label>
             `,
             focusConfirm: false,
             preConfirm: () => {
@@ -42,17 +42,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             String(minutes).padStart(2, '0') + ":" + 
             String(seconds).padStart(2, '0');
 
-        // タイマーをカウントダウンする
-        const endTime = new Date();
-        endTime.setHours(endTime.getHours() + hours);
-        endTime.setMinutes(endTime.getMinutes() + minutes);
-        endTime.setSeconds(endTime.getSeconds() + seconds);
+        let totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
         const timerInterval = setInterval(() => {
-            const now = new Date();
-            const timeLeft = endTime - now;
-
-            if (timeLeft <= 0) {
+            if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
                 document.getElementById('Timer').innerHTML = "00:00:00";
                 Swal.fire({
@@ -63,9 +56,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 return;
             }
 
-            const remainingHours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
-            const remainingMinutes = Math.floor((timeLeft / (1000 * 60)) % 60);
-            const remainingSeconds = Math.floor((timeLeft / 1000) % 60);
+            totalSeconds--;
+
+            const remainingHours = Math.floor(totalSeconds / 3600);
+            const remainingMinutes = Math.floor((totalSeconds % 3600) / 60);
+            const remainingSeconds = totalSeconds % 60;
 
             document.getElementById('Timer').innerHTML = 
                 String(remainingHours).padStart(2, '0') + ":" + 
