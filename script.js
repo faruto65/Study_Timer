@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    let timerInterval;
+    let totalSeconds;
+    let isRunning = false;
+
+    // toggleButton を初期状態で非表示にする
+    document.getElementById('toggleButton').style.display = 'none';
+
     function setTimer() {
         Swal.fire({
             title: "タイマー設定",
@@ -31,23 +38,75 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (result.isConfirmed) {
                 const { settingHours, settingMinutes, settingSeconds } = result.value;
                 startTimer(settingHours, settingMinutes, settingSeconds);
+                // タイマーが設定されたので、toggleButton を表示
+                document.getElementById('toggleButton').style.display = 'block';
             }
         });
     }
 
     function startTimer(hours, minutes, seconds) {
-        // 現在の時間をゼロ埋めして表示
+        totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
         document.getElementById('Timer2').innerHTML = 
             String(hours).padStart(2, '0') + ":" + 
             String(minutes).padStart(2, '0') + ":" + 
             String(seconds).padStart(2, '0');
 
-        let totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        document.getElementById('toggleButton').textContent = 'ストップ';
+        document.getElementById('toggleButton').style.backgroundColor = 'red';
+        isRunning = true;
 
-        const timerInterval = setInterval(() => {
+        timerInterval = setInterval(() => {
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
                 document.getElementById('Timer').innerHTML = "00:00:00";
+                document.getElementById('toggleButton').textContent = 'スタート';
+                document.getElementById('toggleButton').style.backgroundColor = 'green';
+                isRunning = false;
+                Swal.fire({
+                    title: "Good job!",
+                    text: "タイマーが終わったよ！",
+                    icon: "success"
+                });
+                return;
+            }
+
+            totalSeconds--;
+
+            const remainingHours = Math.floor(totalSeconds / 3600);
+            const remainingMinutes = Math.floor((totalSeconds % 3600) / 60);
+            const remainingSeconds = totalSeconds % 60;
+
+            document.getElementById('Timer').innerHTML = 
+                String(remainingHours).padStart(2, '0') + ":" + 
+                String(remainingMinutes).padStart(2, '0') + ":" + 
+                String(remainingSeconds).padStart(2, '0');
+        }, 1000);
+    }
+
+    function toggleTimer() {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            document.getElementById('toggleButton').textContent = 'スタート';
+            document.getElementById('toggleButton').style.backgroundColor = 'green';
+            isRunning = false;
+        } else {
+            resumeTimer();
+        }
+    }
+
+    function resumeTimer() {
+        document.getElementById('toggleButton').textContent = 'ストップ';
+        document.getElementById('toggleButton').style.backgroundColor = 'red';
+        isRunning = true;
+
+        timerInterval = setInterval(() => {
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('Timer').innerHTML = "00:00:00";
+                document.getElementById('toggleButton').textContent = 'スタート';
+                document.getElementById('toggleButton').style.backgroundColor = 'green';
+                isRunning = false;
                 Swal.fire({
                     title: "Good job!",
                     text: "タイマーが終わったよ！",
@@ -82,12 +141,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('currentDateTime').innerHTML = formattedDateTime;
     }
 
-    // 現在の日時を更新するためのインターバル
     setInterval(updateDateTime, 1000);
 
-    // 初期設定の現在の日時表示
     updateDateTime();
 
-    // ボタンのクリックイベントを設定
     document.getElementById('setTimerButton').addEventListener('click', setTimer);
+    document.getElementById('toggleButton').addEventListener('click', toggleTimer);
 });

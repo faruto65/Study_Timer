@@ -49,3 +49,22 @@ body {
 .setTimerButton:hover {
     background-color: #0056b3;
 }
+
+.toggleButton {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggleButton:hover {
+    background-color: darkgreen;
+}
