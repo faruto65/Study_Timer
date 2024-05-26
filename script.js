@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         Swal.fire({
             title: "タイマー設定",
             html: `
-                <label>時間: <input id="settingHours" class="swal2-input" type="number" min="0" max="23"></label>
-                <label>分: <input id="settingMinutes" class="swal2-input" type="number" min="0" max="59"></label>
-                <label>秒: <input id="settingSeconds" class="swal2-input" type="number" min="0" max="59"></label>
+                <label>時間: <input id="settingHours" class="swal2-input" type="number"></label>
+                <label>分: <input id="settingMinutes" class="swal2-input" type="number"></label>
+                <label>秒: <input id="settingSeconds" class="swal2-input" type="number"></label>
             `,
             focusConfirm: false,
             preConfirm: () => {
