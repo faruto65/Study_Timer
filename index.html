@@ -6,11 +6,33 @@
         <title>Study Timer</title>
         <meta name="description" content="勉強用タイマー。">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://kit.fontawesome.com/4cb452c6bc.js" crossorigin="anonymous"></script>
         <script src="script.js"></script>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="/favicon.ico" />
     </head>
     <body>
+        <!-- sidebar section -->
+        <input type="checkbox" id="check">
+        <label for="check">
+            <i class="fa-solid fa-bars" id="hambargerBtn"></i>
+            <i class="fa-solid fa-times" id="cancel"></i>
+        </label>
+
+        <!-- sidebar section -->
+        <div class="sidebar">
+            <header>時計</header>
+            <ul>
+                <li>
+                    <a href="#"><i class="fa-solid fa-hourglass-end"></i>タイマー</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-stopwatch"></i></i>ストップウォッチ</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bg"></div>
         <div id="Timer" class="Timer">00:00:00</div>
         <div id="Timer2" class="Timer2">00:00:00</div>
         <button id="setTimerButton" class="setTimerButton">タイマー設定</button>
