@@ -46,6 +46,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function startTimer(hours, minutes, seconds) {
+        // 既存のタイマーをクリア
+        clearInterval(timerInterval);
+
         totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
         document.getElementById('Timer2').innerHTML = 
